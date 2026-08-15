@@ -13,8 +13,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
+
+      - name: Clone Mihomo Core
+        run: |
+          rm -rf core/Clash.Meta
+          git clone --depth 1 -b FlClash https://github.com/chen08209/Clash.Meta.git core/Clash.Meta
 
       - name: Setup Java 17
         uses: actions/setup-java@v4

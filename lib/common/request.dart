@@ -33,30 +33,45 @@ class Request {
 
   Future<Response<Uint8List>> getFileResponseForUrl(String url) async {
     try {
-      return await _clashDio.get<Uint8List>(
+      return await dio.get<Uint8List>(
         url,
         options: Options(responseType: ResponseType.bytes),
       );
-    } catch (e) {
-      commonPrint.log('getFileResponseForUrl error ${e.toString()}');
-      if (e is DioException) {
-        if (e.type == DioExceptionType.unknown) {
-          throw currentAppLocalizations.unknownNetworkError;
-        } else if (e.type == DioExceptionType.badResponse) {
-          throw currentAppLocalizations.networkException;
+    } catch (_) {
+      try {
+        return await _clashDio.get<Uint8List>(
+          url,
+          options: Options(responseType: ResponseType.bytes),
+        );
+      } catch (e) {
+        commonPrint.log('getFileResponseForUrl error ${e.toString()}');
+        if (e is DioException) {
+          if (e.type == DioExceptionType.unknown) {
+            throw currentAppLocalizations.unknownNetworkError;
+          } else if (e.type == DioExceptionType.badResponse) {
+            throw currentAppLocalizations.networkException;
+          }
+          rethrow;
         }
-        rethrow;
+        throw currentAppLocalizations.unknownNetworkError;
       }
-      throw currentAppLocalizations.unknownNetworkError;
     }
   }
 
   Future<Response<String>> getTextResponseForUrl(String url) async {
-    final response = await _clashDio.get<String>(
-      url,
-      options: Options(responseType: ResponseType.plain),
-    );
-    return response;
+    try {
+      final response = await dio.get<String>(
+        url,
+        options: Options(responseType: ResponseType.plain),
+      );
+      return response;
+    } catch (_) {
+      final response = await _clashDio.get<String>(
+        url,
+        options: Options(responseType: ResponseType.plain),
+      );
+      return response;
+    }
   }
 
   Future<MemoryImage?> getImage(String url) async {

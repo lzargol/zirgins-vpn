@@ -7,7 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FlClashHttpOverrides extends HttpOverrides {
   static String handleFindProxy(Uri url) {
-    if ([localhost].contains(url.host)) {
+    if (!system.isDesktop) {
+      return 'DIRECT';
+    }
+    if ([localhost, '127.0.0.1'].contains(url.host)) {
       return 'DIRECT';
     }
     final ref = globalState.container;
@@ -18,6 +21,7 @@ class FlClashHttpOverrides extends HttpOverrides {
     final mixedPort = ref.read(
       patchClashConfigProvider.select((state) => state.mixedPort),
     );
+    if (mixedPort == null || mixedPort == 0) return 'DIRECT';
     return 'PROXY localhost:$mixedPort';
   }
 

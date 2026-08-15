@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Java 17
         uses: actions/setup-java@v4
@@ -20,60 +22,46 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
 
-      - name: Setup Android NDK
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: master
+          flutter-version: '3.44.4'
+          cache: true
+
+      - name: Setup NDK
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r28c
           add-to-path: true
           link-to-sdk: true
 
-      - name: Prepare env.json and Get Dependencies
+      - name: Get Dependencies
         run: |
-          echo '{"APP_ENV": "stable"}' > env.json
+          flutter --version
           flutter pub get
 
-      - name: Build APK Release (ARM64)
+      - name: Build APK Package
         run: |
-          flutter build apk --release --target-platform android-arm64 --dart-define-from-file=env.json --android-skip-build-dependency-validation
-
-      - name: Build APK Release (Universal)
-        run: |
-          flutter build apk --release --dart-define-from-file=env.json --android-skip-build-dependency-validation
-
-      - name: Prepare Output Directory
-        run: |
-          mkdir -p dist
-          find build/app/outputs/flutter-apk/ -name "*.apk"
-          if [ -f "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" ]; then
-            cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk dist/ZirginsVPN-arm64.apk
-          fi
-          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
-            cp build/app/outputs/flutter-apk/app-release.apk dist/ZirginsVPN-universal.apk
-          fi
+          dart setup.dart android --env stable -v
 
       - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ZirginsVPN-Android-APKs
-          path: dist/*.apk
+          path: ./dist
           if-no-files-found: warn
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*.apk
+          files: dist/*
           name: Zirgins VPN Release ${{ github.ref_name }}
           body: "Official release of Zirgins VPN for Android with 70+ Russian bypass applications."
         env:

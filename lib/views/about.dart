@@ -54,20 +54,6 @@ class AboutView extends StatelessWidget {
           },
           trailing: const Icon(Icons.launch),
         ),
-        ListItem(
-          title: const Text('Поддержка и Админ (@l_zargo_l)'),
-          onTap: () {
-            globalState.openUrl('https://t.me/l_zargo_l');
-          },
-          trailing: const Icon(Icons.launch),
-        ),
-        ListItem(
-          title: const Text('GitHub Проекта'),
-          onTap: () {
-            globalState.openUrl('https://github.com/$repository');
-          },
-          trailing: const Icon(Icons.launch),
-        ),
       ],
     );
   }

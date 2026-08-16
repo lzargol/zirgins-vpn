@@ -48,60 +48,25 @@ class AboutView extends StatelessWidget {
           },
         ),
         ListItem(
-          title: const Text('Telegram'),
+          title: const Text('Telegram Бот (@Zirgins_vbot)'),
           onTap: () {
-            globalState.openUrl('https://t.me/jzargo_bot');
+            globalState.openUrl('https://t.me/Zirgins_vbot');
           },
           trailing: const Icon(Icons.launch),
         ),
         ListItem(
-          title: Text(appLocalizations.project),
+          title: const Text('Поддержка и Админ (@l_zargo_l)'),
+          onTap: () {
+            globalState.openUrl('https://t.me/l_zargo_l');
+          },
+          trailing: const Icon(Icons.launch),
+        ),
+        ListItem(
+          title: const Text('GitHub Проекта'),
           onTap: () {
             globalState.openUrl('https://github.com/$repository');
           },
           trailing: const Icon(Icons.launch),
-        ),
-        ListItem(
-          title: Text(appLocalizations.core),
-          onTap: () {
-            globalState.openUrl(
-              'https://github.com/chen08209/Clash.Meta/tree/FlClash',
-            );
-          },
-          trailing: const Icon(Icons.launch),
-        ),
-      ],
-    );
-  }
-
-  List<Widget> _buildContributorsSection(AppLocalizations appLocalizations) {
-    const contributors = [
-      Contributor(
-        avatar: 'assets/images/avatar/june2.jpg',
-        name: 'June2',
-        link: 'https://t.me/Jibadong',
-      ),
-      Contributor(
-        avatar: 'assets/images/avatar/arue.jpg',
-        name: 'Arue',
-        link: 'https://t.me/xrcm6868',
-      ),
-    ];
-    return generateSection(
-      separated: false,
-      title: appLocalizations.otherContributors,
-      items: [
-        ListItem(
-          title: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              spacing: 24,
-              children: [
-                for (final contributor in contributors)
-                  Avatar(contributor: contributor),
-              ],
-            ),
-          ),
         ),
       ],
     );
@@ -124,10 +89,13 @@ class AboutView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(12),
-                        child: Image.asset(
-                          'assets/images/icon.png',
-                          width: 64,
-                          height: 64,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.asset(
+                            'assets/images/icon.png',
+                            width: 64,
+                            height: 64,
+                          ),
                         ),
                       ),
                       Column(
@@ -135,11 +103,15 @@ class AboutView extends StatelessWidget {
                         children: [
                           Text(
                             appName,
-                            style: Theme.of(context).textTheme.headlineSmall,
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           Text(
-                            globalState.packageInfo.version,
-                            style: Theme.of(context).textTheme.labelLarge,
+                            'v1.0.0 (Release)',
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: const Color(0xFF06B6D4),
+                            ),
                           ),
                         ],
                       ),
@@ -156,16 +128,15 @@ class AboutView extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: 24),
-            Text(
-              appLocalizations.desc,
-              style: Theme.of(context).textTheme.bodySmall,
+            const SizedBox(height: 16),
+            const Text(
+              "🛡️ Высокоскоростной VPN с защитой от блокировок, умной маршрутизацией для сервисов РФ и поддержкой протоколов Hysteria 2 и VLESS Reality.",
+              style: TextStyle(fontSize: 13, height: 1.4),
             ),
           ],
         ),
       ),
       const SizedBox(height: 12),
-      ..._buildContributorsSection(appLocalizations),
       ..._buildMoreSection(context),
     ];
     return BaseScaffold(

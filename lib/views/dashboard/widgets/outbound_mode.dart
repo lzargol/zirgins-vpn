@@ -112,6 +112,14 @@ class OutboundModeV2 extends StatelessWidget {
     };
   }
 
+  String _getModeTitle(Mode mode) {
+    return switch (mode) {
+      Mode.rule => '⚡ Умный',
+      Mode.global => '🌍 Полный',
+      Mode.direct => '🚫 Без VPN',
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = getWidgetHeight(1);
@@ -149,12 +157,13 @@ class OutboundModeV2 extends StatelessWidget {
                                   height: height - 8.ap - 24,
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                    Intl.message(item.name),
+                                    _getModeTitle(item),
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall
                                         ?.adjustSize(1)
                                         .copyWith(
+                                          fontWeight: FontWeight.w600,
                                           color: item == mode
                                               ? _getTextColor(context, item)
                                               : null,

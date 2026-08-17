@@ -108,10 +108,14 @@ const List<String> defaultRussianBypassPackages = [
   'ru.sberbankmobile',
   'ru.sberbank.sberid',
   'ru.sberbank.investor',
+  'com.sberbank.individual',
+  'com.idamob.tinkoff.android',
   'ru.tinkoff',
   'ru.tinkoff.investments',
+  'ru.vtb24.mobilebanking',
   'ru.vtb.mbb',
   'ru.vtb.invest',
+  'ru.alfabank.mobile.android',
   'ru.alfabank.mobile',
   'ru.alfabank.investments',
   'ru.gazprombank.android',
@@ -127,18 +131,29 @@ const List<String> defaultRussianBypassPackages = [
   'ru.nspk.sbpay',
   'ru.nspk.mirpay',
   'ru.rostel',
+  'ru.gosuslugi.net',
   'ru.gosuslugi.app',
   'ru.gosuslugi.pos',
   'ru.gosuslugi.goskey',
   'ru.gosuslugi.auto',
   'ru.gosuslugi.culture',
+  'ru.dom.gosuslugi',
   'ru.nalog.nalogfl',
+  'ru.nalog.ul',
   'ru.fnslabs.selfemployed',
   'ru.mos.app',
   'ru.mos.transport',
   'ru.mos.parking',
+  'ru.emias.app',
+  'ru.mes.dnevnik',
+  'ru.dnevnik.app',
   'ru.fss.navigator',
   'ru.pfr.mobile',
+  'ru.sfr.mobile',
+  'ru.fssp.app',
+  'ru.mvd.mobile',
+  'ru.gibdd.app',
+  'ru.rosreestr.app',
   'com.wildberries.ru',
   'ru.ozon.app.android',
   'com.avito.android',
@@ -238,6 +253,16 @@ abstract class WindowProps with _$WindowProps {
 
 extension WindowPropsExt on WindowProps {
   Size get _size => Size(width, height);
+  Rect? get _rect => top != null && left != null
+      ? Rect.fromLTWH(left!, top!, width, height)
+      : null;
+
+  WindowProps copyWithRect(Rect rect) => copyWith(
+    width: rect.width,
+    height: rect.height,
+    top: rect.top,
+    left: rect.left,
+  );
 
   Size get size => _size.isEmpty ? const Size(680, 580) : _size;
 }
@@ -246,7 +271,7 @@ extension WindowPropsExt on WindowProps {
 abstract class VpnProps with _$VpnProps {
   const factory VpnProps({
     @Default(true) bool enable,
-    @Default(true) bool systemProxy,
+    @Default(false) bool systemProxy,
     @Default(false) bool ipv6,
     @Default(true) bool allowBypass,
     @Default(false) bool dnsHijacking,

@@ -4,6 +4,7 @@ import 'package:defer_pointer/defer_pointer.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
@@ -237,7 +238,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     final activeWidgets = dashboardState.dashboardWidgets.isNotEmpty
         ? dashboardState.dashboardWidgets
         : defaultDashboardWidgets;
-    final children = [
+    final List<GridItem> children = [
       ...activeWidgets
           .where(
             (item) => item.platforms.contains(SupportPlatform.currentPlatform),

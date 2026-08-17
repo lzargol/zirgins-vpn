@@ -13,13 +13,13 @@ class Navigation {
     return [
       NavigationItem(
         keep: false,
-        icon: const Icon(Icons.home_rounded),
+        icon: const Icon(Icons.shield_outlined),
         label: PageLabel.dashboard,
         builder: (_) =>
             const DashboardView(key: GlobalObjectKey(PageLabel.dashboard)),
       ),
       NavigationItem(
-        icon: const Icon(Icons.bolt_rounded),
+        icon: const Icon(Icons.hub_outlined),
         label: PageLabel.proxies,
         builder: (_) =>
             const ProxiesView(key: GlobalObjectKey(PageLabel.proxies)),
@@ -28,7 +28,7 @@ class Navigation {
             : [],
       ),
       NavigationItem(
-        icon: const Icon(Icons.shield_rounded),
+        icon: const Icon(Icons.badge_outlined),
         label: PageLabel.profiles,
         builder: (_) =>
             const ProfilesView(key: GlobalObjectKey(PageLabel.profiles)),

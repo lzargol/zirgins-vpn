@@ -77,15 +77,15 @@ class _StartButtonState extends ConsumerState<StartButton>
     final suspend = ref.watch(suspendProvider);
     final isConnected = isStart && !suspend;
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final buttonWidth = (screenWidth * 0.70).clamp(240.0, 420.0);
+    final buttonWidth = (screenWidth * 0.88).clamp(280.0, 520.0);
 
     return RepaintBoundary(
       child: Center(
         child: Container(
           width: buttonWidth,
-          height: 56,
+          height: 54,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(14),
             gradient: isConnected
                 ? const LinearGradient(
                     colors: [Color(0xFF06B6D4), Color(0xFF10B981)],
@@ -100,10 +100,10 @@ class _StartButtonState extends ConsumerState<StartButton>
             boxShadow: [
               BoxShadow(
                 color: isConnected
-                    ? const Color(0xFF06B6D4).withOpacity(0.4)
-                    : const Color(0xFF8B5CF6).withOpacity(0.4),
-                blurRadius: 18,
-                spreadRadius: 2,
+                    ? const Color(0xFF06B6D4).withOpacity(0.35)
+                    : const Color(0xFF8B5CF6).withOpacity(0.35),
+                blurRadius: 16,
+                spreadRadius: 1,
                 offset: const Offset(0, 4),
               ),
             ],
@@ -111,7 +111,7 @@ class _StartButtonState extends ConsumerState<StartButton>
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(14),
               onTap: handleSwitchStart,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

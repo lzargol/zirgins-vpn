@@ -37,23 +37,26 @@ const defaultAccessControlProps = AccessControlProps();
 const defaultThemeProps = ThemeProps(primaryColor: defaultPrimaryColor);
 
 const List<DashboardWidget> defaultDashboardWidgets = [
-  DashboardWidget.networkSpeed,
   DashboardWidget.outboundModeV2,
-  DashboardWidget.networkDetection,
+  DashboardWidget.networkSpeed,
   DashboardWidget.trafficUsage,
-  DashboardWidget.systemProxyButton,
-  DashboardWidget.tunButton,
-  DashboardWidget.intranetIp,
 ];
 
 List<DashboardWidget> dashboardWidgetsSafeFormJson(
   List<dynamic>? dashboardWidgets,
 ) {
   try {
-    return dashboardWidgets
-            ?.map((e) => $enumDecode(_$DashboardWidgetEnumMap, e))
-            .toList() ??
-        defaultDashboardWidgets;
+    if (dashboardWidgets == null || dashboardWidgets.isEmpty) {
+      return defaultDashboardWidgets;
+    }
+    final list = dashboardWidgets
+        .map((e) => $enumDecodeNullable(_$DashboardWidgetEnumMap, e))
+        .whereType<DashboardWidget>()
+        .toList();
+    if (list.isEmpty || !list.contains(DashboardWidget.outboundModeV2)) {
+      return defaultDashboardWidgets;
+    }
+    return list;
   } catch (_) {
     return defaultDashboardWidgets;
   }
@@ -271,7 +274,7 @@ abstract class NetworkProps with _$NetworkProps {
 @freezed
 abstract class ProxiesStyleProps with _$ProxiesStyleProps {
   const factory ProxiesStyleProps({
-    @Default(ProxiesType.tab) ProxiesType type,
+    @Default(ProxiesType.list) ProxiesType type,
     @Default(ProxiesSortType.none) ProxiesSortType sortType,
     @Default(ProxiesLayout.standard) ProxiesLayout layout,
     @Default(ProxiesIconStyle.standard) ProxiesIconStyle iconStyle,

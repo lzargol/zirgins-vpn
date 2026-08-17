@@ -234,8 +234,11 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     final dashboardState = ref.watch(dashboardStateProvider);
     final columns = max(4 * ((dashboardState.contentWidth / 280).ceil()), 8);
     final spacing = 14.mAp;
+    final activeWidgets = dashboardState.dashboardWidgets.isNotEmpty
+        ? dashboardState.dashboardWidgets
+        : defaultDashboardWidgets;
     final children = [
-      ...dashboardState.dashboardWidgets
+      ...activeWidgets
           .where(
             (item) => item.platforms.contains(SupportPlatform.currentPlatform),
           )

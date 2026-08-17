@@ -16,11 +16,10 @@ val localProperties = Properties().apply {
 }
 
 val mStoreFile: File = file("keystore.jks")
-val mStorePassword: String? = localProperties.getProperty("storePassword")
-val mKeyAlias: String? = localProperties.getProperty("keyAlias")
-val mKeyPassword: String? = localProperties.getProperty("keyPassword")
-val isRelease =
-    mStoreFile.exists() && mStorePassword != null && mKeyAlias != null && mKeyPassword != null
+val mStorePassword = localProperties.getProperty("storePassword") ?: "zirgins2026"
+val mKeyAlias = localProperties.getProperty("keyAlias") ?: "zirgins"
+val mKeyPassword = localProperties.getProperty("keyPassword") ?: "zirgins2026"
+val isRelease = mStoreFile.exists()
 
 
 android {

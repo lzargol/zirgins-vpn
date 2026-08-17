@@ -9,19 +9,6 @@ import 'package:fl_clash/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-@immutable
-class Contributor {
-  final String avatar;
-  final String name;
-  final String link;
-
-  const Contributor({
-    required this.avatar,
-    required this.name,
-    required this.link,
-  });
-}
-
 class AboutView extends StatelessWidget {
   const AboutView({super.key});
 
@@ -61,6 +48,10 @@ class AboutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
+    final version = globalState.packageInfo.version.isNotEmpty
+        ? 'v${globalState.packageInfo.version} (Release)'
+        : 'v1.1.0 (Release)';
+
     final items = [
       ListTile(
         title: Column(
@@ -94,7 +85,7 @@ class AboutView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'v1.0.0 (Release)',
+                            version,
                             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: const Color(0xFF06B6D4),
                             ),
@@ -131,34 +122,6 @@ class AboutView extends StatelessWidget {
         padding: kMaterialListPadding.copyWith(top: 16, bottom: 16),
         child: generateListView(items),
       ),
-    );
-  }
-}
-
-class Avatar extends StatelessWidget {
-  final Contributor contributor;
-
-  const Avatar({super.key, required this.contributor});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Column(
-        children: [
-          SizedBox(
-            width: 36,
-            height: 36,
-            child: CircleAvatar(
-              foregroundImage: AssetImage(contributor.avatar),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(contributor.name, style: context.textTheme.bodySmall),
-        ],
-      ),
-      // onTap: () {
-      //   globalState.openUrl(contributor.link);
-      // },
     );
   }
 }
@@ -208,3 +171,4 @@ class _DeveloperModeDetectorState extends State<_DeveloperModeDetector> {
     return GestureDetector(onTap: _handleTap, child: widget.child);
   }
 }
+

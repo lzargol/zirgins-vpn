@@ -38,11 +38,11 @@ const defaultThemeProps = ThemeProps(primaryColor: defaultPrimaryColor);
 
 const List<DashboardWidget> defaultDashboardWidgets = [
   DashboardWidget.networkSpeed,
-  DashboardWidget.systemProxyButton,
-  DashboardWidget.tunButton,
-  DashboardWidget.outboundMode,
+  DashboardWidget.outboundModeV2,
   DashboardWidget.networkDetection,
   DashboardWidget.trafficUsage,
+  DashboardWidget.systemProxyButton,
+  DashboardWidget.tunButton,
   DashboardWidget.intranetIp,
 ];
 

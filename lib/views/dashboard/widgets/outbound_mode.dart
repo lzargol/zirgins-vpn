@@ -136,76 +136,48 @@ class OutboundModeV2 extends StatelessWidget {
               Mode.global => globalState.theme.darken3PrimaryContainer,
               Mode.direct => context.colorScheme.tertiaryContainer,
             };
-            return LayoutBuilder(
-              builder: (_, constraints) {
-                return Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        constraints: const BoxConstraints.expand(),
-                        child: CommonTabBar<Mode>(
-                          children: Map.fromEntries(
-                            Mode.values.map(
-                              (item) => MapEntry(
-                                item,
-                                Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(),
-                                  height: height - 8.ap - 24,
-                                  padding: const EdgeInsets.all(4),
-                                  child: Text(
-                                    _getModeTitle(item),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.adjustSize(1)
-                                        .copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          color: item == mode
-                                              ? _getTextColor(context, item)
-                                              : null,
-                                        ),
-                                  ),
-                                ),
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              constraints: const BoxConstraints.expand(),
+              child: CommonTabBar<Mode>(
+                children: Map.fromEntries(
+                  Mode.values.map(
+                    (item) => MapEntry(
+                      item,
+                      Container(
+                        clipBehavior: Clip.antiAlias,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(),
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                        child: Text(
+                          _getModeTitle(item),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.adjustSize(1)
+                              .copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: item == mode
+                                    ? _getTextColor(context, item)
+                                    : null,
                               ),
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 0),
-                          groupValue: mode,
-                          onValueChanged: (value) {
-                            if (value == null) {
-                              return;
-                            }
-                            _handleChangeMode(value);
-                          },
-                          thumbColor: thumbColor,
                         ),
                       ),
                     ),
-                    Container(
-                      color: thumbColor.opacity50,
-                      height: 8.ap,
-                      width: constraints.maxWidth,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      // child: Row(
-                      //   children: [
-                      //     Container(
-                      //       width: (constraints.maxWidth - 32) / 3,
-                      //       height: 3,
-                      //       decoration: BoxDecoration(
-                      //         color: _getTextColor(context, mode),
-                      //         borderRadius: BorderRadius.circular(2),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                    ),
-                  ],
-                );
-              },
+                  ),
+                ),
+                padding: EdgeInsets.zero,
+                groupValue: mode,
+                onValueChanged: (value) {
+                  if (value == null) {
+                    return;
+                  }
+                  _handleChangeMode(value);
+                },
+                thumbColor: thumbColor,
+              ),
             );
           },
         ),
@@ -213,3 +185,4 @@ class OutboundModeV2 extends StatelessWidget {
     );
   }
 }
+

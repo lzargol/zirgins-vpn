@@ -22,6 +22,7 @@ class CommonScaffold extends StatefulWidget {
   final List<Widget>? actions;
   final bool? centerTitle;
   final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
   final AppBarEditState? editState;
   final AppBarSearchState? searchState;
   final OnKeywordsUpdateCallback? onKeywordsUpdate;
@@ -39,6 +40,7 @@ class CommonScaffold extends StatefulWidget {
     this.isLoading = false,
     this.searchState,
     this.floatingActionButton,
+    this.floatingActionButtonLocation,
     this.onKeywordsUpdate,
     this.resizeToAvoidBottomInset,
   });
@@ -361,6 +363,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
       ),
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       backgroundColor: widget.backgroundColor,
+      floatingActionButtonLocation: widget.floatingActionButtonLocation,
       floatingActionButton: widget.floatingActionButton != null
           ? ValueListenableBuilder<bool>(
               valueListenable: _isFabExtendedNotifier,

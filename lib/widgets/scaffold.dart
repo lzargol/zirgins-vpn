@@ -23,6 +23,7 @@ class CommonScaffold extends StatefulWidget {
   final bool? centerTitle;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final Widget? bottomNavigationBar;
   final AppBarEditState? editState;
   final AppBarSearchState? searchState;
   final OnKeywordsUpdateCallback? onKeywordsUpdate;
@@ -41,6 +42,7 @@ class CommonScaffold extends StatefulWidget {
     this.searchState,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.bottomNavigationBar,
     this.onKeywordsUpdate,
     this.resizeToAvoidBottomInset,
   });
@@ -376,6 +378,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
               child: widget.floatingActionButton,
             )
           : null,
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 }

@@ -246,15 +246,15 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
             ),
           ),
         ),
-        body: const SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        body: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              OutboundModeV2(),
-              SizedBox(height: 12),
-              Row(
+              const OutboundModeV2(),
+              const SizedBox(height: 12),
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(child: NetworkSpeed()),
@@ -262,7 +262,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                   Expanded(child: TrafficUsage()),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           ),
         ),

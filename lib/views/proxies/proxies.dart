@@ -137,6 +137,7 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
     final proxiesType = ref.watch(
       proxiesStyleSettingProvider.select((state) => state.type),
     );
+    final isMobile = ref.watch(isMobileViewProvider);
     final isLoading = ref.watch(loadingProvider(LoadingTag.proxies));
     return CommonScaffold(
       key: _scaffoldKey,
@@ -146,10 +147,12 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
       actions: _buildActions(context),
       title: context.appLocalizations.proxies,
       searchState: AppBarSearchState(onSearch: _onSearch),
-      body: switch (proxiesType) {
-        ProxiesType.tab => ProxiesTabView(key: _proxiesTabKey),
-        ProxiesType.list => const ProxiesListView(),
-      },
+      body: isMobile
+          ? const ProxiesListView()
+          : switch (proxiesType) {
+              ProxiesType.tab => ProxiesTabView(key: _proxiesTabKey),
+              ProxiesType.list => const ProxiesListView(),
+            },
     );
   }
 }

@@ -232,6 +232,43 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ref.watch(isMobileViewProvider);
+    if (isMobile) {
+      return CommonScaffold(
+        title: context.appLocalizations.dashboard,
+        bottomNavigationBar: const SafeArea(
+          top: false,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: SizedBox(
+              height: 56,
+              child: StartButton(),
+            ),
+          ),
+        ),
+        body: const SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              OutboundModeV2(),
+              SizedBox(height: 12),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: NetworkSpeed()),
+                  SizedBox(width: 12),
+                  Expanded(child: TrafficUsage()),
+                ],
+              ),
+              SizedBox(height: 16),
+            ],
+          ),
+        ),
+      );
+    }
+
     final dashboardState = ref.watch(dashboardStateProvider);
     final columns = max(4 * ((dashboardState.contentWidth / 280).ceil()), 8);
     final spacing = 14.mAp;
@@ -263,7 +300,10 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           top: false,
           child: Padding(
             padding: EdgeInsets.fromLTRB(16, 4, 16, 12),
-            child: StartButton(),
+            child: SizedBox(
+              height: 56,
+              child: StartButton(),
+            ),
           ),
         ),
         body: Align(

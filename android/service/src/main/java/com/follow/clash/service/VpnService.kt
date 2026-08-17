@@ -192,13 +192,17 @@ class VpnService : SystemVpnService(), IBaseService,
                     when (accessControl.mode) {
                         AccessControlMode.ACCEPT_SELECTED -> {
                             (accessControl.acceptList + packageName).forEach {
-                                addAllowedApplication(it)
+                                try {
+                                    addAllowedApplication(it)
+                                } catch (_: Exception) {}
                             }
                         }
 
                         AccessControlMode.REJECT_SELECTED -> {
                             (accessControl.rejectList - packageName).forEach {
-                                addDisallowedApplication(it)
+                                try {
+                                    addDisallowedApplication(it)
+                                } catch (_: Exception) {}
                             }
                         }
                     }

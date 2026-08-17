@@ -21,7 +21,7 @@ class FlClashHttpOverrides extends HttpOverrides {
     final mixedPort = ref.read(
       patchClashConfigProvider.select((state) => state.mixedPort),
     );
-    if (mixedPort == null || mixedPort == 0) return 'DIRECT';
+    if (mixedPort == 0) return 'DIRECT';
     return 'PROXY localhost:$mixedPort';
   }
 

@@ -6,7 +6,5 @@ export 'quick_options.dart';
 export 'traffic_usage.dart';
 export 'memory_info.dart';
 export 'start_button.dart';
-export 'outbound_mode_v2.dart';
 export 'speed_and_traffic_v2.dart';
 export 'split_and_shield_v2.dart';
-export 'zirgins_start_button.dart';

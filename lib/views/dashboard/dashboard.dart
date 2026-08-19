@@ -242,7 +242,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
             padding: EdgeInsets.fromLTRB(16, 4, 16, 12),
             child: SizedBox(
               height: 56,
-              child: ZirginsStartButton(),
+              child: StartButton(),
             ),
           ),
         ),
@@ -252,7 +252,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              OutboundModeV2(),
+              OutboundMode(),
               SizedBox(height: 12),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

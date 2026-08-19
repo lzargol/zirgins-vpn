@@ -8,10 +8,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class NetworkSpeedV2 extends ConsumerWidget {
   const NetworkSpeedV2({super.key});
 
+  Traffic _getLastTraffic(List<Traffic> traffics) {
+    if (traffics.isEmpty) return const Traffic();
+    return traffics.last;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final traffic = ref.watch(trafficProvider);
-    final traffics = ref.watch(trafficsProvider);
+    final traffics = ref.watch(trafficsProvider).list;
+    final lastTraffic = _getLastTraffic(traffics);
 
     return Container(
       height: 145,
@@ -29,12 +34,12 @@ class NetworkSpeedV2 extends ConsumerWidget {
               const Icon(Icons.speed, color: Color(0xFFA78BFA), size: 16),
               const SizedBox(width: 4),
               const Text(
-                'С...',
+                'Скорость',
                 style: TextStyle(color: Color(0xFF8E88A8), fontSize: 12),
               ),
               const Spacer(),
               Text(
-                '↑ ${traffic.up.trafficSpeed}  ↓ ${traffic.down.trafficSpeed}',
+                lastTraffic.speedText,
                 style: const TextStyle(
                   color: Color(0xFFD4CEEE),
                   fontSize: 11,
@@ -117,6 +122,8 @@ class TrafficUsageV2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totalTraffic = ref.watch(totalTrafficProvider);
+    final upTraffic = totalTraffic.up;
+    final downTraffic = totalTraffic.down;
 
     return Container(
       height: 145,
@@ -134,7 +141,7 @@ class TrafficUsageV2 extends ConsumerWidget {
               Icon(Icons.pie_chart_outline, color: Color(0xFFA78BFA), size: 16),
               SizedBox(width: 4),
               Text(
-                'Использование тр...',
+                'Трафик',
                 style: TextStyle(color: Color(0xFF8E88A8), fontSize: 12),
               ),
             ],
@@ -147,8 +154,8 @@ class TrafficUsageV2 extends ConsumerWidget {
                 height: 46,
                 child: CustomPaint(
                   painter: _DonutChartPainter(
-                    up: totalTraffic.up.toDouble(),
-                    down: totalTraffic.down.toDouble(),
+                    up: upTraffic.toDouble(),
+                    down: downTraffic.toDouble(),
                   ),
                 ),
               ),
@@ -168,11 +175,11 @@ class TrafficUsageV2 extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '↑ ${totalTraffic.up.trafficValue}',
+                '↑ ${upTraffic.traffic.value} ${upTraffic.traffic.unit}',
                 style: const TextStyle(color: Color(0xFFD4CEEE), fontSize: 11),
               ),
               Text(
-                '↓ ${totalTraffic.down.trafficValue}',
+                '↓ ${downTraffic.traffic.value} ${downTraffic.traffic.unit}',
                 style: const TextStyle(color: Color(0xFFD4CEEE), fontSize: 11),
               ),
             ],

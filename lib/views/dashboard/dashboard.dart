@@ -235,14 +235,14 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     final isMobile = ref.watch(isMobileViewProvider);
     if (isMobile) {
       return CommonScaffold(
-        title: context.appLocalizations.dashboard,
+        title: 'Главная',
         bottomNavigationBar: const SafeArea(
           top: false,
           child: Padding(
             padding: EdgeInsets.fromLTRB(16, 4, 16, 12),
             child: SizedBox(
               height: 56,
-              child: const StartButton(),
+              child: ZirginsStartButton(),
             ),
           ),
         ),
@@ -257,12 +257,22 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: NetworkSpeed()),
+                  Expanded(child: NetworkSpeedV2()),
                   SizedBox(width: 12),
-                  Expanded(child: TrafficUsage()),
+                  Expanded(child: TrafficUsageV2()),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 12),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(flex: 3, child: SplitTunnelingWidget()),
+                  SizedBox(width: 12),
+                  Expanded(flex: 2, child: AdblockShieldWidget()),
+                ],
+              ),
+              SizedBox(height: 12),
+              SubscriptionLockWidget(),
             ],
           ),
         ),
